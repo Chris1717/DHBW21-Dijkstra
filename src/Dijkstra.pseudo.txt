@@ -1,0 +1,43 @@
+int[][] kanten
+int startknoten
+int[] alleKnoten
+boolean[] erledigteKnoten
+
+int[] kosten
+int[] vorgaenger
+
+int ue = 999999 //unendlich
+
+func initialisieren()
+    for (int i = 0; i < alleKnoten.len; i++)
+        kosten[i] = ue
+        vorgaenger[i] = i
+        erledigteKnoten[i] = false
+    kosten[startknoten] = 0
+
+func dijkstra()
+    while(!alleKnotenbearbeitet())
+        int aktuellerKnoten = -1
+        int akutelleKosten = ue
+        for (int i = 0; i < alleKnoten.len; i++)
+            if ((kosten[i] < aktuelleKosten ) and not (erledigteKnoten[i]))
+                aktuellerKnoten = i
+                aktuelleKosten = kosten[i]
+        
+        for (int i = 0; i < kanten.len; i++)
+            if (aktuellerKnoten != i and not (erledigteKnoten[i]))
+                if (kanten[aktuellerKnoten][i] + kosten[aktuellerKnoten] < kosten[i])
+                    kosten[i] = kanten[aktuellerKnoten][i] + kosten[aktuellerKnoten]
+                    vorgaenger[i] = aktuellerKnoten
+        
+        erledigteKnoten[aktuellerKnoten] = true
+
+func alleKnotenbearbeitet()
+    boolean fertig = true
+    for (int i = 0; i < erledigteKnoten.len; i++) {
+        if (!erledigteKnoten[i])
+            fertig = false
+            break
+    }
+    return fertig
+
